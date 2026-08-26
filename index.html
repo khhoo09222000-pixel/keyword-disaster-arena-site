@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Keyword Disaster Arena is a four-player physics party survival game where every player builds the next disaster.">
+    <meta name="theme-color" content="#070707">
+    <title>Keyword Disaster Arena</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Primary navigation" data-i18n-aria-label="navLabel">
+        <a class="brand" href="#top" aria-label="Keyword Disaster Arena home">Keyword Disaster Arena</a>
+
+        <div class="nav-actions">
+          <div class="nav-links" aria-label="Page sections" data-i18n-aria-label="sectionLabel">
+            <a href="#about" data-i18n="navAbout">About</a>
+            <a href="#gameplay" data-i18n="navGameplay">Gameplay</a>
+            <a href="#playtest" data-i18n="navPlaytest">Playtest</a>
+          </div>
+
+          <div class="language-switch" aria-label="Language" data-i18n-aria-label="languageLabel">
+            <button class="language-button is-active" type="button" data-language="en" aria-pressed="true">EN</button>
+            <span aria-hidden="true">/</span>
+            <button class="language-button" type="button" data-language="ko" aria-pressed="false">KR</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="heroEyebrow">Four-player physics party survival</p>
+            <h1 id="hero-title">
+              <span>Keyword</span>
+              <span>Disaster Arena</span>
+            </h1>
+            <p class="hero-tagline">
+              <span data-i18n="heroLineOne">Build the disaster.</span>
+              <span class="accent-text" data-i18n="heroLineTwo">Survive the chaos.</span>
+            </p>
+            <p class="hero-description" data-i18n="heroDescription">A 4-player physics party survival game where every player builds the next disaster.</p>
+
+            <div class="button-row">
+              <a class="button button-primary" href="#playtest" data-playtest-link data-i18n="apply">Apply for Playtest</a>
+              <a class="button button-secondary" href="#gameplay" data-i18n="howItWorks">How it works</a>
+            </div>
+
+            <ul class="hero-meta" aria-label="Project status" data-i18n-aria-label="statusLabel">
+              <li data-i18n="statusDevelopment">Early development</li>
+              <li data-i18n="statusWindows">Windows</li>
+              <li data-i18n="statusPrivate">Private playtest</li>
+            </ul>
+          </div>
+
+          <div class="arena-visual" aria-hidden="true">
+            <div class="arena-frame">
+              <div class="arena-grid-lines"></div>
+              <div class="arena-ring arena-ring-outer"></div>
+              <div class="arena-ring arena-ring-inner"></div>
+              <span class="hazard hazard-one"></span>
+              <span class="hazard hazard-two"></span>
+              <span class="hazard hazard-three"></span>
+              <span class="hazard hazard-four"></span>
+              <div class="arena-label">
+                <span>04</span>
+                <small data-i18n="simultaneous">simultaneous disasters</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-light" id="about" aria-labelledby="build-title">
+        <div class="shell">
+          <p class="section-kicker" data-i18n="coreKicker">The core idea</p>
+          <h2 class="display-heading" id="build-title" data-i18n="coreTitle">You don't just survive the disaster. You build it.</h2>
+
+          <div class="sentence-builder" aria-label="Example disaster sentence" data-i18n-aria-label="builderLabel">
+            <article class="keyword-card">
+              <span class="card-number">01</span>
+              <p class="card-category" data-i18n="locationLabel">Location</p>
+              <h3 data-i18n="locationValue">Above the arena</h3>
+            </article>
+            <span class="operator" aria-hidden="true">+</span>
+            <article class="keyword-card">
+              <span class="card-number">02</span>
+              <p class="card-category" data-i18n="targetLabel">Target</p>
+              <h3 data-i18n="targetValue">Meteor</h3>
+            </article>
+            <span class="operator" aria-hidden="true">+</span>
+            <article class="keyword-card">
+              <span class="card-number">03</span>
+              <p class="card-category" data-i18n="actionLabel">Action</p>
+              <h3 data-i18n="actionValue">Falls</h3>
+            </article>
+          </div>
+
+          <div class="compiled-sentence">
+            <span aria-hidden="true">↓</span>
+            <p data-i18n="compiledSentence">“Above the arena, a meteor falls.”</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" aria-labelledby="arena-title">
+        <div class="shell split-layout">
+          <div>
+            <p class="section-kicker" data-i18n="arenaKicker">One shared problem</p>
+            <h2 class="display-heading" id="arena-title">
+              <span data-i18n="fourPlayers">Four players.</span>
+              <span data-i18n="fourDisasters">Four disasters.</span>
+              <span class="accent-text" data-i18n="oneArena">One arena.</span>
+            </h2>
+          </div>
+          <div class="section-copy">
+            <p data-i18n="arenaBodyOne">Every player creates one disaster. All four activate together.</p>
+            <p data-i18n="arenaBodyTwo">Physics, positioning, and player decisions turn the arena into a different problem every round.</p>
+          </div>
+        </div>
+
+        <div class="shell event-strip" aria-label="Four disasters activating together" data-i18n-aria-label="eventLabel">
+          <span data-i18n="eventOne">Meteor falls</span>
+          <span data-i18n="eventTwo">Ball duplicates</span>
+          <span data-i18n="eventThree">Ice rises</span>
+          <span data-i18n="eventFour">Wall moves</span>
+          <strong data-i18n="eventTogether">All at once</strong>
+        </div>
+      </section>
+
+      <section class="section section-light" aria-labelledby="physics-title">
+        <div class="shell">
+          <p class="section-kicker" data-i18n="physicsKicker">Emergent physics</p>
+          <h2 class="display-heading compact-heading" id="physics-title" data-i18n="physicsTitle">Chaos can collide.</h2>
+          <p class="section-intro" data-i18n="physicsIntro">Disasters can affect players, the arena, and other disasters.</p>
+
+          <div class="feature-grid">
+            <article class="feature-card feature-card-wide">
+              <span class="feature-icon" aria-hidden="true">↗</span>
+              <h3 data-i18n="toolTitle">A hazard can become a tool.</h3>
+              <p data-i18n="toolBody">Use movement, timing, and the forces already in the arena.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon" aria-hidden="true">⊘</span>
+              <h3 data-i18n="routeTitle">A safe route can disappear.</h3>
+              <p data-i18n="routeBody">The plan changes when disasters meet.</p>
+            </article>
+            <article class="feature-card feature-card-accent">
+              <span class="feature-icon" aria-hidden="true">↩</span>
+              <h3 data-i18n="backfireTitle">Your own disaster can come back to hurt you.</h3>
+              <p data-i18n="backfireBody">Creating danger never makes you immune to it.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="gameplay" aria-labelledby="gameplay-title">
+        <div class="shell">
+          <div class="section-heading-row">
+            <div>
+              <p class="section-kicker" data-i18n="gameplayKicker">Gameplay</p>
+              <h2 class="display-heading compact-heading" id="gameplay-title" data-i18n="gameplayTitle">Calm choices. Chaotic results.</h2>
+            </div>
+            <p class="section-intro narrow" data-i18n="gameplayIntro">Build a sentence, read the arena, and survive what everyone created.</p>
+          </div>
+
+          <div class="media-placeholder" role="img" aria-label="Gameplay footage placeholder" data-i18n-aria-label="mediaLabel">
+            <div class="media-grid" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="media-message">
+              <span class="record-dot" aria-hidden="true"></span>
+              <p data-i18n="footageSoon">Gameplay footage coming soon.</p>
+            </div>
+          </div>
+
+          <!-- When real footage is ready, replace .media-placeholder with:
+          <video class="gameplay-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/gameplay/gameplay-1.mp4" type="video/mp4">
+          </video>
+          -->
+        </div>
+      </section>
+
+      <section class="section playtest-section" id="playtest" aria-labelledby="playtest-title">
+        <div class="shell playtest-panel">
+          <p class="section-kicker" data-i18n="playtestKicker">Early development</p>
+          <h2 class="display-heading compact-heading" id="playtest-title" data-i18n="playtestTitle">Private Playtest</h2>
+          <p class="playtest-lead" data-i18n="playtestBody">Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.</p>
+          <span class="button button-disabled" aria-disabled="true" data-i18n="applicationsSoon">Applications opening soon</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-brand">Keyword Disaster Arena</p>
+          <p data-i18n="independent">Independent game project.</p>
+        </div>
+        <p>© 2026 Keyword Disaster Arena</p>
+      </div>
+    </footer>
+  </body>
+</html>

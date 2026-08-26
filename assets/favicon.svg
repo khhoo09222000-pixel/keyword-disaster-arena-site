@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Keyword Disaster Arena mark">
+  <rect width="64" height="64" rx="16" fill="#111111"/>
+  <circle cx="45" cy="19" r="7" fill="#ff5a36"/>
+  <path d="M19 15v34M19 34l22-19M19 34l24 15" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+</svg>
