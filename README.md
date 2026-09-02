@@ -20,17 +20,27 @@ Then open [http://localhost:8080](http://localhost:8080). Stop the server with `
 
 English is the default language. The EN/KR switch stores the visitor's choice in local browser storage.
 
-## 3. Add the Google Form URL
+## 3. Manage playtest providers
 
-Open `script.js` and change the first setting:
+`script.js` contains the central `PLAYTEST_PROVIDERS` list. The current production provider is Player.gg:
 
 ```js
-const PLAYTEST_URL = "https://forms.gle/your-real-form-url";
+{
+  id: "playergg",
+  name: "Player.gg",
+  url: "https://player.gg/explore/games/keyword-disaster-arena",
+  enabled: true,
+  type: "application"
+}
 ```
 
-When the value is empty, the hero button scrolls to the Playtest section. When a real URL is present, it opens the form in a new tab. Do not use a placeholder or private URL.
+The Hero and Playtest-section application links both use this list:
 
-The Hero and Playtest-section application links both use this single URL setting.
+- One valid enabled provider: both links open that provider directly.
+- Two or more valid enabled providers: both links lead to the provider chooser in the Playtest section.
+- No valid enabled providers: application links are replaced by a localized unavailable state.
+
+To add Steam Playtest, Antidote, or another service later, add an object with a stable `id`, display `name`, real public `url`, `enabled` flag, and `type`. Only add and enable a provider after its real participation URL is ready; never publish placeholder links.
 
 ## 4. Add gameplay images or video
 

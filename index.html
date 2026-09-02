@@ -51,6 +51,7 @@
 
             <div class="button-row">
               <a class="button button-primary" href="#playtest" data-playtest-link data-i18n="apply">Apply for Playtest</a>
+              <span class="button button-disabled" data-playtest-unavailable-cta data-i18n="playtestUnavailableCta" hidden>Playtest unavailable</span>
               <a class="button button-secondary" href="#gameplay" data-i18n="howItWorks">How it works</a>
             </div>
 
@@ -196,6 +197,14 @@
           <h2 class="display-heading compact-heading" id="playtest-title" data-i18n="playtestTitle">Private Playtest</h2>
           <p class="playtest-lead" data-i18n="playtestBody">Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.</p>
           <a class="button button-primary" href="#playtest" data-playtest-link data-i18n="apply">Apply for Playtest</a>
+          <span class="button button-disabled" data-playtest-unavailable-cta data-i18n="playtestUnavailableCta" hidden>Playtest unavailable</span>
+          <p class="playtest-unavailable" data-playtest-unavailable-message data-i18n="playtestUnavailable" role="status" hidden>Playtest applications are temporarily unavailable.</p>
+
+          <div class="provider-chooser" id="playtest-options" data-playtest-chooser aria-labelledby="playtest-options-title" hidden>
+            <h3 id="playtest-options-title" data-i18n="chooserTitle">Choose how you'd like to join</h3>
+            <p data-i18n="chooserIntro">Use whichever playtest platform is most convenient for you.</p>
+            <div class="provider-list" data-provider-list></div>
+          </div>
         </div>
       </section>
     </main>

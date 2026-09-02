@@ -1,6 +1,13 @@
-// Public playtest application URL.
-const PLAYTEST_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSeUvcVy9YBWtGP6YTT_KLGUuABWYJCJzpcOBxxnMxuiGHYh8w/viewform?usp=header";
+// Public playtest routes. Add a provider only after its real URL is ready.
+const PLAYTEST_PROVIDERS = Object.freeze([
+  Object.freeze({
+    id: "playergg",
+    name: "Player.gg",
+    url: "https://player.gg/explore/games/keyword-disaster-arena",
+    enabled: true,
+    type: "application"
+  })
+]);
 
 const translations = {
   en: {
@@ -61,6 +68,13 @@ const translations = {
     playtestKicker: "Early development",
     playtestTitle: "Private Playtest",
     playtestBody: "Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.",
+    chooserTitle: "Choose how you'd like to join",
+    chooserIntro: "Use whichever playtest platform is most convenient for you.",
+    providerApplication: "Apply for the private playtest",
+    providerPlay: "Install and join the playtest",
+    continueWith: "Continue with {provider}",
+    playtestUnavailable: "Playtest applications are temporarily unavailable.",
+    playtestUnavailableCta: "Playtest unavailable",
     independent: "Independent game project."
   },
   ko: {
@@ -121,11 +135,131 @@ const translations = {
     playtestKicker: "초기 개발",
     playtestTitle: "비공개 플레이테스트",
     playtestBody: "Keyword Disaster Arena는 현재 초기 비공개 플레이테스트를 준비하고 있습니다. 핵심 멀티플레이 경험을 함께 검증할 Windows 플레이어를 찾고 있습니다.",
+    chooserTitle: "편한 방법으로 참여하세요",
+    chooserIntro: "사용하기 편한 플레이테스트 플랫폼을 선택할 수 있습니다.",
+    providerApplication: "비공개 플레이테스트 신청",
+    providerPlay: "플레이테스트 설치 및 참여",
+    continueWith: "{provider}에서 계속",
+    playtestUnavailable: "현재 플레이테스트 신청을 일시적으로 이용할 수 없습니다.",
+    playtestUnavailableCta: "플레이테스트 신청 불가",
     independent: "인디 게임 프로젝트."
   }
 };
 
 const languageButtons = document.querySelectorAll("[data-language]");
+const playtestLinks = document.querySelectorAll("[data-playtest-link]");
+const unavailableCtas = document.querySelectorAll("[data-playtest-unavailable-cta]");
+const unavailableMessage = document.querySelector("[data-playtest-unavailable-message]");
+const providerChooser = document.querySelector("[data-playtest-chooser]");
+const providerList = document.querySelector("[data-provider-list]");
+
+function hasValidProviderUrl(provider) {
+  if (!provider || typeof provider.url !== "string" || !provider.url.trim()) {
+    return false;
+  }
+
+  try {
+    const url = new URL(provider.url);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+function resolvePlaytestProviders(providers) {
+  const enabledProviders = providers.filter((provider) => {
+    if (!provider?.enabled) {
+      return false;
+    }
+
+    const isValid = Boolean(provider.id && provider.name && hasValidProviderUrl(provider));
+    if (!isValid) {
+      console.warn(`[Playtest] Ignoring invalid enabled provider: ${provider?.id || "unknown"}`);
+    }
+    return isValid;
+  });
+
+  return {
+    mode: enabledProviders.length === 0 ? "unavailable" : enabledProviders.length === 1 ? "direct" : "chooser",
+    providers: enabledProviders
+  };
+}
+
+let currentPlaytestResolution = resolvePlaytestProviders(PLAYTEST_PROVIDERS);
+
+function currentDictionary() {
+  return translations[document.documentElement.lang === "ko" ? "ko" : "en"];
+}
+
+function createProviderOption(provider) {
+  const dictionary = currentDictionary();
+  const option = document.createElement("a");
+  const details = document.createElement("span");
+  const name = document.createElement("strong");
+  const description = document.createElement("small");
+  const action = document.createElement("span");
+
+  option.className = "provider-option";
+  option.href = provider.url;
+  option.target = "_blank";
+  option.rel = "noopener noreferrer";
+
+  details.className = "provider-details";
+  name.className = "provider-name";
+  name.textContent = provider.name;
+  description.className = "provider-description";
+  description.textContent = provider.type === "play" ? dictionary.providerPlay : dictionary.providerApplication;
+  action.className = "provider-action";
+  action.textContent = dictionary.continueWith.replace("{provider}", provider.name);
+
+  details.append(name, description);
+  option.append(details, action);
+  return option;
+}
+
+function renderPlaytestRouting() {
+  const { mode, providers } = currentPlaytestResolution;
+
+  playtestLinks.forEach((link) => {
+    link.hidden = mode === "unavailable";
+    link.removeAttribute("aria-disabled");
+
+    if (mode === "direct") {
+      link.href = providers[0].url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    } else {
+      link.href = mode === "chooser" ? "#playtest-options" : "#playtest";
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    }
+  });
+
+  unavailableCtas.forEach((cta) => {
+    cta.hidden = mode !== "unavailable";
+  });
+
+  if (unavailableMessage) {
+    unavailableMessage.hidden = mode !== "unavailable";
+  }
+
+  if (providerChooser && providerList) {
+    providerChooser.hidden = mode !== "chooser";
+    providerList.replaceChildren();
+    if (mode === "chooser") {
+      providers.forEach((provider) => providerList.append(createProviderOption(provider)));
+    }
+  }
+}
+
+function configurePlaytestRouting(providers = PLAYTEST_PROVIDERS) {
+  currentPlaytestResolution = resolvePlaytestProviders(providers);
+  renderPlaytestRouting();
+  return {
+    mode: currentPlaytestResolution.mode,
+    providerIds: currentPlaytestResolution.providers.map((provider) => provider.id)
+  };
+}
 
 function setLanguage(language) {
   const dictionary = translations[language] || translations.en;
@@ -151,6 +285,8 @@ function setLanguage(language) {
     button.setAttribute("aria-pressed", String(isActive));
   });
 
+  renderPlaytestRouting();
+
   try {
     window.localStorage.setItem("kda-language", language);
   } catch {
@@ -162,15 +298,6 @@ languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.language));
 });
 
-document.querySelectorAll("[data-playtest-link]").forEach((link) => {
-  if (PLAYTEST_URL.trim()) {
-    link.href = PLAYTEST_URL;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-  } else {
-    link.href = "#playtest";
-  }
-});
 
 let savedLanguage = "en";
 try {
