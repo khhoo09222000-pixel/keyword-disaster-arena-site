@@ -1,5 +1,6 @@
-// Public playtest application URL. Leave empty until the form is ready.
-const PLAYTEST_URL = "";
+// Public playtest application URL.
+const PLAYTEST_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSeUvcVy9YBWtGP6YTT_KLGUuABWYJCJzpcOBxxnMxuiGHYh8w/viewform?usp=header";
 
 const translations = {
   en: {
@@ -60,7 +61,6 @@ const translations = {
     playtestKicker: "Early development",
     playtestTitle: "Private Playtest",
     playtestBody: "Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.",
-    applicationsSoon: "Applications opening soon",
     independent: "Independent game project."
   },
   ko: {
@@ -121,7 +121,6 @@ const translations = {
     playtestKicker: "초기 개발",
     playtestTitle: "비공개 플레이테스트",
     playtestBody: "Keyword Disaster Arena는 현재 초기 비공개 플레이테스트를 준비하고 있습니다. 핵심 멀티플레이 경험을 함께 검증할 Windows 플레이어를 찾고 있습니다.",
-    applicationsSoon: "신청이 곧 열립니다",
     independent: "인디 게임 프로젝트."
   }
 };

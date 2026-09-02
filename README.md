@@ -30,7 +30,7 @@ const PLAYTEST_URL = "https://forms.gle/your-real-form-url";
 
 When the value is empty, the hero button scrolls to the Playtest section. When a real URL is present, it opens the form in a new tab. Do not use a placeholder or private URL.
 
-When applications open, also replace the non-clickable “Applications opening soon” message in the Playtest section of `index.html` with a real link if desired.
+The Hero and Playtest-section application links both use this single URL setting.
 
 ## 4. Add gameplay images or video
 
