@@ -42,15 +42,18 @@ The Hero and Playtest-section application links both use this list:
 
 To add Steam Playtest, Antidote, or another service later, add an object with a stable `id`, display `name`, real public `url`, `enabled` flag, and `type`. Only add and enable a provider after its real participation URL is ready; never publish placeholder links.
 
-## 4. Add gameplay images or video
+## 4. Gameplay showcase
 
 Put public media under `assets/gameplay/`. See `assets/README.md` for naming and optimization guidance.
 
-`index.html` contains a commented video example directly below `.media-placeholder`. To publish a video:
+The Gameplay section uses these public assets:
 
-1. Add `assets/gameplay/gameplay-1.mp4`.
-2. Replace the `.media-placeholder` block with the commented `<video>` example.
-3. Test mobile loading and keep the file reasonably small.
+- `assets/gameplay/kda-gameplay-showcase.mp4`: 25.4-second real prototype montage, H.264 MP4, 1920×810, 30 fps, silent, fast start.
+- `assets/gameplay/kda-gameplay-poster.webp`: a frame from the showcase.
+
+The source is a solo prototype capture with four disaster sentences, not a recorded four-human multiplayer session. The video preserves the original 64:27 composition and HUD without cropping. It autoplays muted, loops inline, uses `preload="metadata"`, and provides native controls for pausing and fullscreen viewing. English editing labels briefly explain the card choices and simultaneous disasters.
+
+Keep the original recording and high-quality reusable master outside this repository. When replacing the showcase, update the dimensions/aspect ratio if needed and verify desktop/mobile playback, looping, and the unchanged playtest links before publishing.
 
 Do not publish game source, configuration files, credentials, logs, player identifiers, or private development material.
 

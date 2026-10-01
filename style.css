@@ -747,8 +747,9 @@ h1 span {
 
 .gameplay-video {
   display: block;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 64 / 27;
+  object-fit: contain;
 }
 
 .playtest-section {
