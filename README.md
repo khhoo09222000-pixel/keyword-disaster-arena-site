@@ -22,25 +22,25 @@ English is the default language. The EN/KR switch stores the visitor's choice in
 
 ## 3. Manage playtest providers
 
-`script.js` contains the central `PLAYTEST_PROVIDERS` list. The current production provider is Player.gg:
+`script.js` contains the central `PLAYTEST_PROVIDERS` list. First Look retains the original production URL (and stable `playergg` ID):
 
 ```js
 {
   id: "playergg",
-  name: "Player.gg",
+  name: "First Look",
   url: "https://player.gg/explore/games/keyword-disaster-arena",
   enabled: true,
   type: "application"
 }
 ```
 
-The Hero and Playtest-section application links both use this list:
+The second provider is **Steam Playtest**, linked to the main game's public store page:
 
-- One valid enabled provider: both links open that provider directly.
-- Two or more valid enabled providers: both links lead to the provider chooser in the Playtest section.
-- No valid enabled providers: application links are replaced by a localized unavailable state.
+`https://store.steampowered.com/app/5245060/Keyword_Disaster_Arena/`
 
-To add Steam Playtest, Antidote, or another service later, add an object with a stable `id`, display `name`, real public `url`, `enabled` flag, and `type`. Only add and enable a provider after its real participation URL is ready; never publish placeholder links.
+The Hero and Playtest-section buttons both open the same native modal dialog. Available providers are shown equally, with English/Korean descriptions. Selecting a provider opens its existing external page in a new tab and closes the dialog. Close, Escape, or a backdrop click also dismiss it and restore focus to the original button. With no valid enabled providers, buttons are replaced by the localized unavailable state.
+
+Steam store availability and access are controlled by Steam; the site does not promise immediate access or installation. Only enable real public URLs; never publish placeholders.
 
 ## 4. Gameplay showcase
 

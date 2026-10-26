@@ -2,10 +2,17 @@
 const PLAYTEST_PROVIDERS = Object.freeze([
   Object.freeze({
     id: "playergg",
-    name: "Player.gg",
+    name: "First Look",
     url: "https://player.gg/explore/games/keyword-disaster-arena",
     enabled: true,
     type: "application"
+  }),
+  Object.freeze({
+    id: "steam",
+    name: "Steam Playtest",
+    url: "https://store.steampowered.com/app/5245060/Keyword_Disaster_Arena/",
+    enabled: true,
+    type: "store"
   })
 ]);
 
@@ -68,10 +75,10 @@ const translations = {
     playtestTitle: "Private Playtest",
     playtestBody: "Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.",
     chooserTitle: "Choose how you'd like to join",
-    chooserIntro: "Use whichever playtest platform is most convenient for you.",
-    providerApplication: "Apply for the private playtest",
-    providerPlay: "Install and join the playtest",
-    continueWith: "Continue with {provider}",
+    chooserIntro: "Choose a platform. Your selection opens in a new tab.",
+    chooserClose: "Close playtest options",
+    providerApplication: "Visit the First Look application page",
+    providerStore: "Check the playtest on the Steam store",
     playtestUnavailable: "Playtest applications are temporarily unavailable.",
     playtestUnavailableCta: "Playtest unavailable",
     independent: "Independent game project."
@@ -134,10 +141,10 @@ const translations = {
     playtestTitle: "비공개 플레이테스트",
     playtestBody: "Keyword Disaster Arena는 현재 초기 비공개 플레이테스트를 준비하고 있습니다. 핵심 멀티플레이 경험을 함께 검증할 Windows 플레이어를 찾고 있습니다.",
     chooserTitle: "편한 방법으로 참여하세요",
-    chooserIntro: "사용하기 편한 플레이테스트 플랫폼을 선택할 수 있습니다.",
-    providerApplication: "비공개 플레이테스트 신청",
-    providerPlay: "플레이테스트 설치 및 참여",
-    continueWith: "{provider}에서 계속",
+    chooserIntro: "참여 경로를 선택하세요. 선택한 페이지는 새 탭에서 열립니다.",
+    chooserClose: "플레이테스트 선택 닫기",
+    providerApplication: "First Look 신청 페이지로 이동",
+    providerStore: "Steam 상점에서 플레이테스트 확인하기",
     playtestUnavailable: "현재 플레이테스트 신청을 일시적으로 이용할 수 없습니다.",
     playtestUnavailableCta: "플레이테스트 신청 불가",
     independent: "인디 게임 프로젝트."
@@ -150,6 +157,8 @@ const unavailableCtas = document.querySelectorAll("[data-playtest-unavailable-ct
 const unavailableMessage = document.querySelector("[data-playtest-unavailable-message]");
 const providerChooser = document.querySelector("[data-playtest-chooser]");
 const providerList = document.querySelector("[data-provider-list]");
+const providerClose = document.querySelector("[data-playtest-close]");
+let playtestTrigger = null;
 
 function hasValidProviderUrl(provider) {
   if (!provider || typeof provider.url !== "string" || !provider.url.trim()) {
@@ -178,7 +187,7 @@ function resolvePlaytestProviders(providers) {
   });
 
   return {
-    mode: enabledProviders.length === 0 ? "unavailable" : enabledProviders.length === 1 ? "direct" : "chooser",
+    mode: enabledProviders.length === 0 ? "unavailable" : "chooser",
     providers: enabledProviders
   };
 }
@@ -206,9 +215,10 @@ function createProviderOption(provider) {
   name.className = "provider-name";
   name.textContent = provider.name;
   description.className = "provider-description";
-  description.textContent = provider.type === "play" ? dictionary.providerPlay : dictionary.providerApplication;
+  description.textContent = provider.type === "store" ? dictionary.providerStore : dictionary.providerApplication;
   action.className = "provider-action";
-  action.textContent = dictionary.continueWith.replace("{provider}", provider.name);
+  action.textContent = "↗";
+  action.setAttribute("aria-hidden", "true");
 
   details.append(name, description);
   option.append(details, action);
@@ -220,17 +230,7 @@ function renderPlaytestRouting() {
 
   playtestLinks.forEach((link) => {
     link.hidden = mode === "unavailable";
-    link.removeAttribute("aria-disabled");
-
-    if (mode === "direct") {
-      link.href = providers[0].url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    } else {
-      link.href = mode === "chooser" ? "#playtest-options" : "#playtest";
-      link.removeAttribute("target");
-      link.removeAttribute("rel");
-    }
+    link.setAttribute("aria-expanded", String(Boolean(providerChooser?.open)));
   });
 
   unavailableCtas.forEach((cta) => {
@@ -242,7 +242,9 @@ function renderPlaytestRouting() {
   }
 
   if (providerChooser && providerList) {
-    providerChooser.hidden = mode !== "chooser";
+    if (mode === "unavailable") {
+      closePlaytestChooser();
+    }
     providerList.replaceChildren();
     if (mode === "chooser") {
       providers.forEach((provider) => providerList.append(createProviderOption(provider)));
@@ -258,6 +260,65 @@ function configurePlaytestRouting(providers = PLAYTEST_PROVIDERS) {
     providerIds: currentPlaytestResolution.providers.map((provider) => provider.id)
   };
 }
+
+function closePlaytestChooser() {
+  if (providerChooser?.open) {
+    providerChooser.close();
+  }
+}
+
+playtestLinks.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!providerChooser || providerChooser.open || currentPlaytestResolution.mode !== "chooser") {
+      return;
+    }
+    playtestTrigger = button;
+    providerChooser.showModal();
+    document.body.classList.add("playtest-dialog-open");
+    playtestLinks.forEach((trigger) => trigger.setAttribute("aria-expanded", "true"));
+  });
+});
+
+providerClose?.addEventListener("click", closePlaytestChooser);
+providerChooser?.addEventListener("keydown", (event) => {
+  if (event.key !== "Tab") {
+    return;
+  }
+  const first = providerClose;
+  const last = providerList?.lastElementChild || first;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last?.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first?.focus();
+  }
+});
+providerChooser?.addEventListener("click", (event) => {
+  if (event.target !== providerChooser) {
+    return;
+  }
+  const bounds = providerChooser.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right
+      || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+    closePlaytestChooser();
+  }
+});
+providerChooser?.addEventListener("close", () => {
+  if (providerChooser.open) {
+    return;
+  }
+  document.body.classList.remove("playtest-dialog-open");
+  playtestLinks.forEach((trigger) => trigger.setAttribute("aria-expanded", "false"));
+  playtestTrigger?.focus({ preventScroll: true });
+});
+providerList?.addEventListener("click", (event) => {
+  if (event.target.closest("a")) {
+    closePlaytestChooser();
+  }
+});
+window.addEventListener("pagehide", closePlaytestChooser);
+window.addEventListener("pageshow", closePlaytestChooser);
 
 function setLanguage(language) {
   const dictionary = translations[language] || translations.en;

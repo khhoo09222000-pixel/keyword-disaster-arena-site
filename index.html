@@ -50,7 +50,7 @@
             <p class="hero-description" data-i18n="heroDescription">A 4-player physics party survival game where every player builds the next disaster.</p>
 
             <div class="button-row">
-              <a class="button button-primary" href="#playtest" data-playtest-link data-i18n="apply">Apply for Playtest</a>
+              <button class="button button-primary" type="button" data-playtest-link data-i18n="apply" aria-haspopup="dialog" aria-controls="playtest-options" aria-expanded="false">Apply for Playtest</button>
               <span class="button button-disabled" data-playtest-unavailable-cta data-i18n="playtestUnavailableCta" hidden>Playtest unavailable</span>
               <a class="button button-secondary" href="#gameplay" data-i18n="howItWorks">How it works</a>
             </div>
@@ -185,18 +185,19 @@
           <p class="section-kicker" data-i18n="playtestKicker">Early development</p>
           <h2 class="display-heading compact-heading" id="playtest-title" data-i18n="playtestTitle">Private Playtest</h2>
           <p class="playtest-lead" data-i18n="playtestBody">Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.</p>
-          <a class="button button-primary" href="#playtest" data-playtest-link data-i18n="apply">Apply for Playtest</a>
+          <button class="button button-primary" type="button" data-playtest-link data-i18n="apply" aria-haspopup="dialog" aria-controls="playtest-options" aria-expanded="false">Apply for Playtest</button>
           <span class="button button-disabled" data-playtest-unavailable-cta data-i18n="playtestUnavailableCta" hidden>Playtest unavailable</span>
           <p class="playtest-unavailable" data-playtest-unavailable-message data-i18n="playtestUnavailable" role="status" hidden>Playtest applications are temporarily unavailable.</p>
-
-          <div class="provider-chooser" id="playtest-options" data-playtest-chooser aria-labelledby="playtest-options-title" hidden>
-            <h3 id="playtest-options-title" data-i18n="chooserTitle">Choose how you'd like to join</h3>
-            <p data-i18n="chooserIntro">Use whichever playtest platform is most convenient for you.</p>
-            <div class="provider-list" data-provider-list></div>
-          </div>
         </div>
       </section>
     </main>
+
+    <dialog class="provider-chooser" id="playtest-options" data-playtest-chooser aria-labelledby="playtest-options-title" aria-describedby="playtest-options-intro">
+      <button class="provider-close" type="button" data-playtest-close aria-label="Close playtest options" data-i18n-aria-label="chooserClose" autofocus><span aria-hidden="true">×</span></button>
+      <h3 id="playtest-options-title" data-i18n="chooserTitle">Choose how you'd like to join</h3>
+      <p id="playtest-options-intro" data-i18n="chooserIntro">Choose a platform. Your selection opens in a new tab.</p>
+      <div class="provider-list" data-provider-list></div>
+    </dialog>
 
     <footer class="site-footer">
       <div class="shell footer-inner">
