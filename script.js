@@ -67,10 +67,11 @@ const translations = {
     routeBody: "The plan changes when disasters meet.",
     backfireTitle: "Your own disaster can come back to hurt you.",
     backfireBody: "Creating danger never makes you immune to it.",
-    gameplayKicker: "Gameplay",
-    gameplayTitle: "Calm choices. Chaotic results.",
-    gameplayIntro: "Build a sentence, read the arena, and survive what everyone created.",
-    mediaLabel: "Keyword Disaster Arena prototype gameplay showcase",
+    gameplayKicker: "Visual update",
+    gameplayTitle: "A fresh look at the arena.",
+    gameplayIntro: "Actual Steam build footage of the arena, menus, and a one-person Host lobby. This teaser does not show a multiplayer match.",
+    mediaLabel: "Keyword Disaster Arena visual update teaser: arena, menus and a one-person Host lobby",
+    mediaFallback: "Open the visual update video.",
     playtestKicker: "Early development",
     playtestTitle: "Private Playtest",
     playtestBody: "Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.",
@@ -133,10 +134,11 @@ const translations = {
     routeBody: "재난이 만나는 순간 계획도 달라집니다.",
     backfireTitle: "내가 만든 재난이 나를 덮칠 수 있습니다.",
     backfireBody: "위험을 만들었다고 해서 그 위험에서 면역이 되지는 않습니다.",
-    gameplayKicker: "게임플레이",
-    gameplayTitle: "차분한 선택. 혼란스러운 결과.",
-    gameplayIntro: "문장을 만들고, 경기장을 읽고, 모두가 만든 결과에서 살아남으세요.",
-    mediaLabel: "Keyword Disaster Arena 프로토타입 게임플레이 영상",
+    gameplayKicker: "비주얼 업데이트",
+    gameplayTitle: "새로운 경기장을 만나 보세요.",
+    gameplayIntro: "실제 Steam 빌드의 경기장·메뉴와 1인 Host 로비를 담았습니다. 멀티플레이 경기 영상은 아닙니다.",
+    mediaLabel: "Keyword Disaster Arena 비주얼 업데이트 티저: 경기장·메뉴와 1인 Host 로비",
+    mediaFallback: "비주얼 업데이트 영상 직접 열기",
     playtestKicker: "초기 개발",
     playtestTitle: "비공개 플레이테스트",
     playtestBody: "Keyword Disaster Arena는 현재 초기 비공개 플레이테스트를 준비하고 있습니다. 핵심 멀티플레이 경험을 함께 검증할 Windows 플레이어를 찾고 있습니다.",
@@ -342,6 +344,10 @@ function setLanguage(language) {
     const isActive = button.dataset.language === language;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  document.querySelectorAll(".gameplay-video track").forEach((track) => {
+    track.track.mode = track.srclang === language ? "showing" : "disabled";
   });
 
   renderPlaytestRouting();

@@ -48,10 +48,12 @@ Put public media under `assets/gameplay/`. See `assets/README.md` for naming and
 
 The Gameplay section uses these public assets:
 
-- `assets/gameplay/kda-gameplay-showcase.mp4`: 25.4-second real prototype montage, H.264 MP4, 1920×810, 30 fps, silent, fast start.
+- `assets/gameplay/kda-gameplay-showcase.mp4`: 24-second visual-update teaser from actual Steam Playtest Build 26456790, H.264 MP4, 1920×1080, 30 fps output, silent, fast start.
 - `assets/gameplay/kda-gameplay-poster.webp`: a frame from the showcase.
 
-The source is a solo prototype capture with four disaster sentences, not a recorded four-human multiplayer session. The video preserves the original 64:27 composition and HUD without cropping. It autoplays muted, loops inline, uses `preload="metadata"`, and provides native controls for pausing and fullscreen viewing. English editing labels briefly explain the card choices and simultaneous disasters.
+The source is the real main menu and a one-person Host lobby, **not a multiplayer match or a gameplay trailer**. Native 2560×1080 window recordings were captured at 15 fps and repeated to 30 fps output; there is no AI frame interpolation or gameplay synthesis. The complete ultrawide frame is fitted within 16:9 without stretching/cropping the HUD. Only the lobby's temporary room code and Steam display name are masked for privacy; the actual 1/4 player count is preserved. No added music or invented game sound is used.
+
+English/Korean WebVTT captions follow the EN/KR switch. Playback is muted, looping, inline, uses `preload="metadata"`, and retains native pause/fullscreen controls. A separate video link remains available when inline playback fails. The poster is a real frame from the teaser. The previous prototype montage is preserved in Git history at commit `6b4a9cc5f07fc4aa6c778aefac660e4e10fdedfe`.
 
 Keep the original recording and high-quality reusable master outside this repository. When replacing the showcase, update the dimensions/aspect ratio if needed and verify desktop/mobile playback, looping, and the unchanged playtest links before publishing.
 

@@ -749,7 +749,7 @@ h1 span {
 .gameplay-video {
   display: block;
   height: auto;
-  aspect-ratio: 64 / 27;
+  aspect-ratio: 16 / 9;
   object-fit: contain;
 }
 
