@@ -48,12 +48,13 @@ Put public media under `assets/gameplay/`. See `assets/README.md` for naming and
 
 The Gameplay section uses these public assets:
 
-- `assets/gameplay/kda-gameplay-showcase.mp4`: 24-second visual-update teaser from actual Steam Playtest Build 26456790, H.264 MP4, 1920×1080, 30 fps output, silent, fast start.
-- `assets/gameplay/kda-gameplay-poster.webp`: a frame from the showcase.
+- `assets/gameplay/kda-trailer-en-web-20261106.mp4`: user-edited final English trailer, approximately 40.36 seconds.
+- `assets/gameplay/kda-trailer-ko-web-20261106.mp4`: user-edited final Korean trailer, approximately 30.95 seconds.
+- `assets/gameplay/kda-trailer-en-poster-20261106.webp` and `kda-trailer-ko-poster-20261106.webp`: actual frames from the corresponding trailers.
 
-The source is the real main menu and a one-person Host lobby, **not a multiplayer match or a gameplay trailer**. Native 2560×1080 window recordings were captured at 15 fps and repeated to 30 fps output; there is no AI frame interpolation or gameplay synthesis. The complete ultrawide frame is fitted within 16:9 without stretching/cropping the HUD. Only the lobby's temporary room code and Steam display name are masked for privacy; the actual 1/4 player count is preserved. No added music or invented game sound is used.
+These are the user's final edits of actual Development solo gameplay with an existing test dummy, **not an online multiplayer match**. The English and Korean edits intentionally have different lengths and scenes. Originals are read-only outside this repository; the public derivatives only scale 2560×1080 to 1920×810, preserve the 64:27 composition, encode H.264/AAC, and enable fast start. No cuts, timing edits, new captions, crop, or AI interpolation are added. Existing development target labels remain as supplied. The user confirmed public distribution rights for both soundtracks.
 
-English/Korean WebVTT captions follow the EN/KR switch. Playback is muted, looping, inline, uses `preload="metadata"`, and retains native pause/fullscreen controls. A separate video link remains available when inline playback fails. The poster is a real frame from the teaser. The previous prototype montage is preserved in Git history at commit `6b4a9cc5f07fc4aa6c778aefac660e4e10fdedfe`.
+EN/KR switches the actual MP4, poster, accessible label and fallback links. The language is saved in local storage. Old WebVTT tracks described a different cut and are not overlaid on these localized videos. Playback is muted, looping, inline, uses `preload="metadata"`, and retains native pause/mute/fullscreen controls; explicit pause and mute choices survive a language switch. Blocked autoplay falls back to controls. Old video files and the previous site commit `4a94b1548ccc672c5f7a3cf640a1bc68bca6c114` are preserved; no old trailer was deleted.
 
 Keep the original recording and high-quality reusable master outside this repository. When replacing the showcase, update the dimensions/aspect ratio if needed and verify desktop/mobile playback, looping, and the unchanged playtest links before publishing.
 

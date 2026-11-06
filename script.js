@@ -69,9 +69,9 @@ const translations = {
     backfireBody: "Creating danger never makes you immune to it.",
     gameplayKicker: "Visual update",
     gameplayTitle: "A fresh look at the arena.",
-    gameplayIntro: "Actual Steam build footage of the arena, menus, and a one-person Host lobby. This teaser does not show a multiplayer match.",
-    mediaLabel: "Keyword Disaster Arena visual update teaser: arena, menus and a one-person Host lobby",
-    mediaFallback: "Open the visual update video.",
+    gameplayIntro: "Choose disaster cards, dodge the chaos, and try abilities and taunts. This trailer shows Development solo gameplay with a test dummy, not an online multiplayer match.",
+    mediaLabel: "Keyword Disaster Arena English gameplay trailer: Development solo with a test dummy",
+    mediaFallback: "Open the gameplay video.",
     playtestKicker: "Early development",
     playtestTitle: "Private Playtest",
     playtestBody: "Keyword Disaster Arena is currently in early private playtesting. We are looking for Windows players to help test the core multiplayer experience.",
@@ -136,9 +136,9 @@ const translations = {
     backfireBody: "위험을 만들었다고 해서 그 위험에서 면역이 되지는 않습니다.",
     gameplayKicker: "비주얼 업데이트",
     gameplayTitle: "새로운 경기장을 만나 보세요.",
-    gameplayIntro: "실제 Steam 빌드의 경기장·메뉴와 1인 Host 로비를 담았습니다. 멀티플레이 경기 영상은 아닙니다.",
-    mediaLabel: "Keyword Disaster Arena 비주얼 업데이트 티저: 경기장·메뉴와 1인 Host 로비",
-    mediaFallback: "비주얼 업데이트 영상 직접 열기",
+    gameplayIntro: "카드로 재난을 만들고 혼란을 피하며 능력과 도발을 사용하세요. 실제 Development 솔로 경기와 테스트 더미를 촬영한 트레일러이며, 온라인 다인 경기 영상은 아닙니다.",
+    mediaLabel: "Keyword Disaster Arena 한국어 게임플레이 트레일러: 개발용 솔로·테스트 더미 시연",
+    mediaFallback: "게임플레이 영상 직접 열기",
     playtestKicker: "초기 개발",
     playtestTitle: "비공개 플레이테스트",
     playtestBody: "Keyword Disaster Arena는 현재 초기 비공개 플레이테스트를 준비하고 있습니다. 핵심 멀티플레이 경험을 함께 검증할 Windows 플레이어를 찾고 있습니다.",
@@ -322,6 +322,46 @@ providerList?.addEventListener("click", (event) => {
 window.addEventListener("pagehide", closePlaytestChooser);
 window.addEventListener("pageshow", closePlaytestChooser);
 
+const GAMEPLAY_MEDIA = Object.freeze({
+  en: Object.freeze({
+    src: "assets/gameplay/kda-trailer-en-web-20261106.mp4?v=final-20261106",
+    poster: "assets/gameplay/kda-trailer-en-poster-20261106.webp?v=final-20261106"
+  }),
+  ko: Object.freeze({
+    src: "assets/gameplay/kda-trailer-ko-web-20261106.mp4?v=final-20261106",
+    poster: "assets/gameplay/kda-trailer-ko-poster-20261106.webp?v=final-20261106"
+  })
+});
+
+function setGameplayLanguage(language) {
+  const media = GAMEPLAY_MEDIA[language] || GAMEPLAY_MEDIA.en;
+  document.querySelectorAll('[data-i18n="mediaFallback"]').forEach((link) => {
+    link.setAttribute("href", media.src);
+  });
+  document.querySelectorAll(".gameplay-video").forEach((video) => {
+    video.poster = media.poster;
+    const source = video.querySelector("source");
+    if (!source || source.getAttribute("src") === media.src) {
+      video.dataset.mediaLanguage = language;
+      return;
+    }
+    // Preserve a visitor's explicit pause/mute choice across language changes.
+    // On first load, retain native muted-autoplay behaviour and controls.
+    const keepPaused = Boolean(video.dataset.mediaLanguage) && video.paused;
+    const muted = video.muted;
+    const volume = video.volume;
+    source.setAttribute("src", media.src);
+    video.dataset.mediaLanguage = language;
+    video.load();
+    video.muted = muted;
+    video.volume = volume;
+    if (!keepPaused) {
+      const playback = video.play();
+      playback?.catch(() => { /* Native controls and the direct link remain usable. */ });
+    }
+  });
+}
+
 function setLanguage(language) {
   const dictionary = translations[language] || translations.en;
   document.documentElement.lang = language;
@@ -346,9 +386,9 @@ function setLanguage(language) {
     button.setAttribute("aria-pressed", String(isActive));
   });
 
-  document.querySelectorAll(".gameplay-video track").forEach((track) => {
-    track.track.mode = track.srclang === language ? "showing" : "disabled";
-  });
+  // The final videos already contain their localized game UI. Old candidate
+  // WebVTT captions describe a different edit and must not be overlaid.
+  setGameplayLanguage(language);
 
   renderPlaytestRouting();
 
